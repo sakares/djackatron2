@@ -1,5 +1,6 @@
 package com.test.djackatron2.service;
 
+import com.test.djackatron2.exception.InsufficientFundException;
 import com.test.djackatron2.model.Account;
 
 public class TransferService {
@@ -28,11 +29,21 @@ public class TransferService {
 	}
 
 	public void transferMoney(double amount, long senderID, long receiverID) {
+		
+		if (amount == 0) throw new IllegalArgumentException();
+		else if (amount < 0) throw new IllegalArgumentException();
+		
 		double feeRate = this.feePolicy.calculateFee(amount);
 		Account sender = this.accRepository.find(senderID);
-		sender.setBalance(sender.getBalance() - amount - feeRate);
 		Account receiver = this.accRepository.find(receiverID);
-		receiver.setBalance(receiver.getBalance() + amount);
+		
+		double senderBalance = sender.getBalance();
+		double receiverBalance = receiver.getBalance();
+		
+		if (amount + feeRate > senderBalance) throw new InsufficientFundException();
+		
+		sender.setBalance(senderBalance - amount - feeRate);
+		receiver.setBalance(receiverBalance + amount);
 	}
 
 }
