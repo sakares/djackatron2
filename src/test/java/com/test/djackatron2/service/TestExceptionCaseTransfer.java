@@ -32,7 +32,7 @@ public class TestExceptionCaseTransfer {
 		when(accRepository.find(desAcc.getId())).thenReturn(desAcc);
 		
 		transferService.setFeePolicy(feePolicy);
-		transferService.setAccountRepository(accRepository);
+		transferService.setAccRepository(accRepository);
 	}
 	
 	@Test(expected=InsufficientFundException.class)
@@ -82,5 +82,7 @@ public class TestExceptionCaseTransfer {
 		//then
 		fail();
 	}
+	
+	
 
 }
