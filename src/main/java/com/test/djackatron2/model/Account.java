@@ -3,7 +3,14 @@ package com.test.djackatron2.model;
 public class Account {
 	private Long id;
 	private String name;
-	private Double balance;
+	private double balance;
+	
+	
+	public Account(Long id, String name, double balance) {
+		this.setId(id);
+		this.setName(name);
+		this.setBalance(balance);
+	}
 	
 	public Long getId() {
 		return id;
@@ -17,10 +24,10 @@ public class Account {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Double getBalance() {
+	public double getBalance() {
 		return balance;
 	}
-	public void setBalance(Double balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 	

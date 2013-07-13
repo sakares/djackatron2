@@ -48,6 +48,7 @@ public class TestFeePolicy {
 		feePolicy.setFee(fixedRate);
 		
 		//when
+		feePolicy.setAmount(amount);
 		double result = feePolicy.calculateFee(amount);
 		
 		// then

@@ -28,15 +28,11 @@ public class TransferService {
 	}
 
 	public void transferMoney(double amount, long senderID, long receiverID) {
-//		double feeRate = this.feePolicy.calculateFee(amount);
+		double feeRate = this.feePolicy.calculateFee(amount);
 		Account sender = this.accRepository.find(senderID);
-		sender.setBalance(65d);
+		sender.setBalance(sender.getBalance() - amount - feeRate);
 		Account receiver = this.accRepository.find(receiverID);
-		receiver.setBalance(30d);
-		
-		
-//		sender.setAmount(sender.getAmount() - amount - feeRate);
-//		receiver.setAmount(receiver.getAmount() + amount);
+		receiver.setBalance(receiver.getBalance() + amount);
 	}
 
 }
