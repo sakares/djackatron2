@@ -7,24 +7,46 @@ import org.junit.Test;
 public class TestFeePolicy {
 
 	@Test
-	public void testSpecifiableFee() {
+	public void testEditableFee() {
 		FeePolicy feePolicy = new FeePolicy();
-		assertEquals("Fee must be specifiable", feePolicy.setFee(10.0), true );
+		feePolicy.setFee(10.0);
+		assertEquals(10.0, feePolicy.getFee(),0.0);
 	}
-	
+
 	@Test
 	public void testFeeReturnAsPolicy5Bath() {
-		// given
-		double flatFee = 1000.0;
+		// init
 		FeePolicy feePolicy = new FeePolicy();
-		assertEquals("Fee must be specifiable", feePolicy.setFee(flatFee), true );
+		double result = 0.0;
+
+		// given
+		feePolicy.setAmount(1.0);
+
+		// when
+		result = feePolicy.calculateFee();
+
+		// then
+		assertEquals(5.0, result, 0.0);
+
 		
-		//when
-		double result = feePolicy.calculateFee();
+		// given
+		feePolicy.setAmount(10.0);
+
+		// when
+		result = feePolicy.calculateFee();
+
+		// then
+		assertEquals(5.0, result, 0.0);
+
 		
-		//then
+		// given
+		feePolicy.setAmount(1000.0);
+
+		// when
+		result = feePolicy.calculateFee();
+
+		// then
 		assertEquals(5.0, result, 0.0);
 	}
-	
-	
+
 }
