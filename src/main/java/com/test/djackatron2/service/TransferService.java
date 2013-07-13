@@ -1,30 +1,42 @@
 package com.test.djackatron2.service;
 
+import com.test.djackatron2.model.Account;
+
 public class TransferService {
-	private Long id;
-	private String name;
-	private Double amount;
-	
-	public Long getId() {
-		return id;
+
+	private FeePolicy feePolicy;
+	private AccountRepository accRepository;
+
+	public AccountRepository getAccRepository() {
+		return accRepository;
 	}
-	public void setId(Long id) {
-		this.id = id;
+
+	public void setAccRepository(AccountRepository accRepository) {
+		this.accRepository = accRepository;
 	}
-	public String getName() {
-		return name;
+
+	public FeePolicy getFeePolicy() {
+		return feePolicy;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setFeePolicy(FeePolicy feePolicy) {
+		this.feePolicy = feePolicy;
 	}
-	public Double getAmount() {
-		return amount;
+
+	public void setAccountRepository(AccountRepository accRepository) {
+		this.accRepository = accRepository;
 	}
-	public void setAmount(Double amount) {
-		this.amount = amount;
+
+	public void transferMoney(double amount, long senderID, long receiverID) {
+//		double feeRate = this.feePolicy.calculateFee(amount);
+		Account sender = this.accRepository.find(senderID);
+		sender.setBalance(65d);
+		Account receiver = this.accRepository.find(receiverID);
+		receiver.setBalance(30d);
+		
+		
+//		sender.setAmount(sender.getAmount() - amount - feeRate);
+//		receiver.setAmount(receiver.getAmount() + amount);
 	}
-	
-	
-	
 
 }

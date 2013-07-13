@@ -31,11 +31,10 @@ public class FeePolicy {
 		this.fee = fee;
 	}
 	
-	public double calculateFee() {
+	public double calculateFee(double amount) {
 		double result = 0.0;
-		double amount = this.getAmount();
 		if (amount == 1000.0 || amount == 10.0 || amount == 1.0)
-			result = 5.0;
+			result = this.getFee();
 		return result;
 	}
 }

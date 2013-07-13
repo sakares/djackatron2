@@ -2,9 +2,37 @@ package com.test.djackatron2.service;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import java.util.Arrays;
+import java.util.Collection;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+
+@RunWith(value=Parameterized.class)
 public class TestFeePolicy {
+	private double fixedRate, amount, expectedFee;
+	
+	public TestFeePolicy(double fixedRate, double amount, double expectedFee) {
+		this.fixedRate = fixedRate;
+		this.amount = amount;
+		this.expectedFee = expectedFee;
+	}
+	
+	@Parameters
+	public static Collection<Object[]> primeNumbers() {
+		return Arrays
+				.asList(new Object[][] {
+						{ 5, 1, 5 },
+						{ 5, 10, 5 },
+						{ 5, 1000, 5 },
+						{ 10, 1, 10 },
+						{ 10, 10, 10 },
+						{ 10, 1000, 10 },
+				});
+	}
+	
 
 	@Test
 	public void testEditableFee() {
@@ -14,39 +42,16 @@ public class TestFeePolicy {
 	}
 
 	@Test
-	public void testFeeReturnAsPolicy5Bath() {
-		// init
+	public void testFeePolicy() {
+		// given
 		FeePolicy feePolicy = new FeePolicy();
-		double result = 0.0;
-
-		// given
-		feePolicy.setAmount(1.0);
-
-		// when
-		result = feePolicy.calculateFee();
-
-		// then
-		assertEquals(5.0, result, 0.0);
-
+		feePolicy.setFee(fixedRate);
 		
-		// given
-		feePolicy.setAmount(10.0);
-
-		// when
-		result = feePolicy.calculateFee();
-
-		// then
-		assertEquals(5.0, result, 0.0);
-
+		//when
+		double result = feePolicy.calculateFee(amount);
 		
-		// given
-		feePolicy.setAmount(1000.0);
-
-		// when
-		result = feePolicy.calculateFee();
-
 		// then
-		assertEquals(5.0, result, 0.0);
+		assertEquals(expectedFee, result, 0.0);
 	}
 
 }
