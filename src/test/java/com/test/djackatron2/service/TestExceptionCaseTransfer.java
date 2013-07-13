@@ -28,7 +28,6 @@ public class TestExceptionCaseTransfer {
 		when(feePolicy.calculateFee(anyDouble())).thenReturn(flatFeePolicy);
 		
 		AccountRepository accRepository = mock(AccountRepository.class);
-		
 		when(accRepository.find(srcAcc.getId())).thenReturn(srcAcc);
 		when(accRepository.find(desAcc.getId())).thenReturn(desAcc);
 		
@@ -72,5 +71,16 @@ public class TestExceptionCaseTransfer {
 		fail();
 	}
 	
+	@Test(expected=IllegalArgumentException.class)
+	public void testTransferBelowMinimumRate() {
+		//given
+		double amount = 5d;
+		
+		//when
+		transferService.transferMoney(amount, srcAcc.getId(), desAcc.getId());
+		
+		//then
+		fail();
+	}
 
 }

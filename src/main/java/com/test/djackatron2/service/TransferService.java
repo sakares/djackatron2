@@ -29,19 +29,28 @@ public class TransferService {
 	}
 
 	public void transferMoney(double amount, long senderID, long receiverID) {
-		
-		if (amount == 0) throw new IllegalArgumentException();
-		else if (amount < 0) throw new IllegalArgumentException();
-		
+
+		if (amount == 0)
+			throw new IllegalArgumentException();
+		else if (amount < 0)
+			throw new IllegalArgumentException();
+
 		double feeRate = this.feePolicy.calculateFee(amount);
+		double minimumTransferRate = 10d;
+		
+		if (amount < minimumTransferRate)
+			throw new IllegalArgumentException();
+		
 		Account sender = this.accRepository.find(senderID);
 		Account receiver = this.accRepository.find(receiverID);
-		
+
 		double senderBalance = sender.getBalance();
 		double receiverBalance = receiver.getBalance();
+
+		if (amount + feeRate > senderBalance)
+			throw new InsufficientFundException();
 		
-		if (amount + feeRate > senderBalance) throw new InsufficientFundException();
-		
+
 		sender.setBalance(senderBalance - amount - feeRate);
 		receiver.setBalance(receiverBalance + amount);
 	}

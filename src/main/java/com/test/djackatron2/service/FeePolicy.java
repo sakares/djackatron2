@@ -1,23 +1,9 @@
 package com.test.djackatron2.service;
 
 public class FeePolicy {
-	private Long id;
-	private String type;
 	private double amount;
 	private double fee;
 	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
 	public double getAmount() {
 		return amount;
 	}
